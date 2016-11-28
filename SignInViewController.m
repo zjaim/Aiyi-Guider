@@ -9,6 +9,11 @@
 #import "SignInViewController.h"
 
 @interface SignInViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *UserAccountText;
+@property (weak, nonatomic) IBOutlet UITextField *PasswordText;
+@property (weak, nonatomic) IBOutlet UISwitch *SwitchButtonPassword;
+@property (weak, nonatomic) IBOutlet UISwitch *SwitchButtuoAdmin;
+@property (weak, nonatomic) IBOutlet UILabel *UserLabel;
 
 @end
 
@@ -17,6 +22,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+- (IBAction)Tap:(id)sender {
+    [_UserAccountText resignFirstResponder];
+    [_PasswordText resignFirstResponder];
+}
+- (IBAction)SwitchButtonPasswordChanged:(id)sender {
+    if(_SwitchButtonPassword.isOn==YES) {
+        [_PasswordText setSecureTextEntry:(NO)];
+    }
+    else {
+        [_PasswordText setSecureTextEntry:(YES)];
+    }
+}
+- (IBAction)SwitchButtonAdminChanged:(id)sender {
+    if(_SwitchButtuoAdmin.isOn==YES) {
+        [_UserLabel setText:(@"管理帐号")];
+    }
+    else {
+        [_UserLabel setText:(@"发布帐号")];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

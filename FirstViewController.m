@@ -33,9 +33,9 @@ CLLocationCoordinate2D CAUCCoordinate;
     MapScan=MKCoordinateSpanMake(0.014, 0.014);   //设置纬度和经度范围
     MapCenterLocation=MKCoordinateRegionMake(CAUCCoordinate, MapScan);   //MKCoordinateRegion中包含一个CLLocationCoordinate2D和一个MKCoordinateSpan
     [_MainMap setRegion:(MapCenterLocation) animated:(YES)];  //设置地图视野
-    [super viewDidLoad];
     [_LocateButton setImage:[UIImage imageNamed:(@"locateactived.png")] forState:(UIControlStateHighlighted)];
     [_Loading stopAnimating];
+    [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 }
 - (IBAction)ShowUsersLocation:(id)sender {  //点击显示位置按钮触发的方法
