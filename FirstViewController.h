@@ -11,6 +11,6 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface FirstViewController : UIViewController <UISearchBarDelegate,CLLocationManagerDelegate,MKMapViewDelegate,MKAnnotation>
-  //遵循搜索框控件委托，定位管理器委托声明，地图视图委托，大头针对象委托协议
+  //遵循搜索框控件，定位管理器，地图视图，大头针对象协议
 
 @end

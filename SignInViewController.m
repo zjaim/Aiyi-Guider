@@ -43,6 +43,33 @@
         [_UserLabel setText:(@"发布帐号")];
     }
 }
+- (IBAction)startLoginAction:(id)sender {
+    LAContext *context=[[LAContext alloc]init];
+    NSError *error=nil;
+    NSString *localizedReasonString=@"验证Touch ID以登录";
+    if([context canEvaluatePolicy:(LAPolicyDeviceOwnerAuthenticationWithBiometrics) error:(&error)]) {
+        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:localizedReasonString reply:^(BOOL success,NSError *error) {
+            if(success) {
+                UIAlertController *loginSuccessful=[UIAlertController alertControllerWithTitle:(@"提示") message:(@"Touch ID认证成功") preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *OkButton=[UIAlertAction actionWithTitle:(@"好") style:UIAlertActionStyleDefault handler:(nil)];
+                [loginSuccessful addAction:(OkButton)];
+                [self presentViewController:(loginSuccessful) animated:(YES) completion:(nil)];
+            }
+            else {
+                UIAlertController *loginFailed=[UIAlertController alertControllerWithTitle:(@"错误") message:(@"Touch ID认证失败") preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *OkButton=[UIAlertAction actionWithTitle:(@"好") style:UIAlertActionStyleDefault handler:(nil)];
+                [loginFailed addAction:(OkButton)];
+                [self presentViewController:(loginFailed) animated:(YES) completion:(nil)];
+            }
+        }];
+    }
+    else {
+        UIAlertController *TouchIDFailed=[UIAlertController alertControllerWithTitle:(@"错误") message:(@"设备不支持或未启用Touch ID") preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *OkButton=[UIAlertAction actionWithTitle:(@"好") style:UIAlertActionStyleDefault handler:(nil)];
+        [TouchIDFailed addAction:(OkButton)];
+        [self presentViewController:(TouchIDFailed) animated:(YES) completion:(nil)];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

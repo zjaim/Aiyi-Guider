@@ -8,31 +8,32 @@
 
 #import "FirstViewController.h"
 @interface FirstViewController ()
+
 @property (weak, nonatomic) IBOutlet UISearchBar *TopSearchBar;
 @property (weak, nonatomic) IBOutlet MKMapView *MainMap;
-@property (nonatomic,retain) CLLocationManager *LocationManager;
 @property (weak, nonatomic) IBOutlet UIButton *LocateButton;
-@property (nonatomic,strong) CLGeocoder *Geocoder;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *Loading;
+@property (nonatomic,retain) CLLocationManager *LocationManager;
+@property (nonatomic,strong) CLGeocoder *Geocoder;
 @property (nonatomic,strong) MKPointAnnotation *annotation;
+@property NSMutableArray *AnnotationsOnMap;
+@property MKCoordinateRegion MapCenterLocation;
+@property MKCoordinateSpan MapScan;
+@property CLLocationCoordinate2D CAUCCoordinate;
+
 @end
 
 @implementation FirstViewController
-
-NSMutableArray *AnnotationsOnMap;
-MKCoordinateRegion MapCenterLocation;
-MKCoordinateSpan MapScan;
-CLLocationCoordinate2D CAUCCoordinate;
 
 - (void)viewDidLoad {
     [_Loading startAnimating];
     self.TopSearchBar.delegate=self;  //设置搜索栏对象的委托对象
     self.MainMap.delegate=self;  //地图控制器的委托对象
     _MainMap.mapType=MKMapTypeStandard;
-    CAUCCoordinate=CLLocationCoordinate2DMake(39.108, 117.35);   //设置学校中心经纬度
-    MapScan=MKCoordinateSpanMake(0.014, 0.014);   //设置纬度和经度范围
-    MapCenterLocation=MKCoordinateRegionMake(CAUCCoordinate, MapScan);   //MKCoordinateRegion中包含一个CLLocationCoordinate2D和一个MKCoordinateSpan
-    [_MainMap setRegion:(MapCenterLocation) animated:(YES)];  //设置地图视野
+    _CAUCCoordinate=CLLocationCoordinate2DMake(39.108, 117.35);   //设置学校中心经纬度
+    _MapScan=MKCoordinateSpanMake(0.014, 0.014);   //设置纬度和经度范围
+    _MapCenterLocation=MKCoordinateRegionMake(_CAUCCoordinate, _MapScan);   //MKCoordinateRegion中包含一个CLLocationCoordinate2D和一个MKCoordinateSpan
+    [_MainMap setRegion:(_MapCenterLocation) animated:(YES)];  //设置地图视野
     [_LocateButton setImage:[UIImage imageNamed:(@"locateactived.png")] forState:(UIControlStateHighlighted)];
     [_Loading stopAnimating];
     [super viewDidLoad];
@@ -47,8 +48,8 @@ CLLocationCoordinate2D CAUCCoordinate;
     _MainMap.userTrackingMode=MKUserTrackingModeFollow;  //持续跟踪用户位置
 }
 - (IBAction)BackToCAUC:(id)sender {
-    MapCenterLocation=MKCoordinateRegionMake(CAUCCoordinate, MapScan);
-    [_MainMap setRegion:(MapCenterLocation) animated:(YES)];  //设置地图视野
+    _MapCenterLocation=MKCoordinateRegionMake(_CAUCCoordinate, _MapScan);
+    [_MainMap setRegion:(_MapCenterLocation) animated:(YES)];  //设置地图视野
 }
 - (IBAction)UserTapMap:(id)sender {   //单击地图手势激活
     _TopSearchBar.showsCancelButton=NO;
@@ -58,15 +59,15 @@ CLLocationCoordinate2D CAUCCoordinate;
     searchBar.showsCancelButton=YES;
 }
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {   //文本编辑结束
-    if(searchBar.text==nil && AnnotationsOnMap!=nil){
-        [self.MainMap removeAnnotations:(AnnotationsOnMap)];
+    if(searchBar.text==nil && _AnnotationsOnMap!=nil){
+        [self.MainMap removeAnnotations:(_AnnotationsOnMap)];
     }
 }
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {   //点击搜索框的取消按钮时调用
     [searchBar resignFirstResponder];
     searchBar.showsCancelButton=NO;
-    if(AnnotationsOnMap!=nil) {
-        [self.MainMap removeAnnotations:(AnnotationsOnMap)];
+    if(_AnnotationsOnMap!=nil) {
+        [self.MainMap removeAnnotations:(_AnnotationsOnMap)];
     }
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {  //搜索框的搜索按钮被按下触发的方法
@@ -85,20 +86,20 @@ CLLocationCoordinate2D CAUCCoordinate;
             [self presentViewController:(NoPlaceFound) animated:(YES) completion:(nil)];
         }
         else {   //如果找到了地点
-            if(AnnotationsOnMap==nil) {
-                AnnotationsOnMap=[NSMutableArray array];
+            if(_AnnotationsOnMap==nil) {
+                _AnnotationsOnMap=[NSMutableArray array];
             }
             else {
-                [self.MainMap removeAnnotations:(AnnotationsOnMap)];
+                [self.MainMap removeAnnotations:(_AnnotationsOnMap)];
             }
             for(CLPlacemark *places in placemarks) {   //遍历地点数组
                 MKPointAnnotation *annotation=[[MKPointAnnotation alloc]init];   //创建大头针对象
                 annotation.title=places.name;
                 annotation.coordinate=CLLocationCoordinate2DMake(places.location.coordinate.latitude, places.location.coordinate.longitude);   //大头针对象在地图上的位置为地点位置
-                [AnnotationsOnMap addObject:(annotation)];
+                [_AnnotationsOnMap addObject:(annotation)];
                 [self.MainMap addAnnotation:(annotation)];   //向地图添加大头针
-                MapCenterLocation=MKCoordinateRegionMake(annotation.coordinate, MapScan);
-                [_MainMap setRegion:(MapCenterLocation) animated:(YES)];
+                _MapCenterLocation=MKCoordinateRegionMake(annotation.coordinate, _MapScan);
+                [_MainMap setRegion:(_MapCenterLocation) animated:(YES)];
             }
         }
     }];
