@@ -26,29 +26,29 @@
 @implementation FirstViewController
 
 - (void)viewDidLoad {
-    [_Loading startAnimating];
-    self.TopSearchBar.delegate=self;  //设置搜索栏对象的委托对象
-    self.MainMap.delegate=self;  //地图控制器的委托对象
-    _MainMap.mapType=MKMapTypeStandard;
-    _CAUCCoordinate=CLLocationCoordinate2DMake(39.108, 117.35);   //设置学校中心经纬度
-    _MapScan=MKCoordinateSpanMake(0.014, 0.014);   //设置纬度和经度范围
-    _MapCenterLocation=MKCoordinateRegionMake(_CAUCCoordinate, _MapScan);   //MKCoordinateRegion中包含一个CLLocationCoordinate2D和一个MKCoordinateSpan
-    [_MainMap setRegion:(_MapCenterLocation) animated:(YES)];  //设置地图视野
-    [_LocateButton setImage:[UIImage imageNamed:(@"locateactived.png")] forState:(UIControlStateHighlighted)];
-    [_Loading stopAnimating];
     [super viewDidLoad];
+    [_Loading startAnimating];      //加载符号开始
+    self.TopSearchBar.delegate=self;    //设定搜索栏对象的委托对象
+    self.MainMap.delegate=self;     //设定地图控制器的委托对象
+    _MainMap.mapType=MKMapTypeStandard;
+    _CAUCCoordinate=CLLocationCoordinate2DMake(39.108, 117.35);     //设置学校中心经纬度
+    _MapScan=MKCoordinateSpanMake(0.014, 0.014);        //设置纬度和经度范围
+    _MapCenterLocation=MKCoordinateRegionMake(_CAUCCoordinate, _MapScan);       //MKCoordinateRegion区域中包含一个CLLocationCoordinate2D坐标和一个MKCoordinateSpan范围
+    [_MainMap setRegion:(_MapCenterLocation) animated:(YES)];       //设置地图视野
+    [_LocateButton setImage:[UIImage imageNamed:(@"locateactived.png")] forState:(UIControlStateHighlighted)];      //设置按下定位按钮时显示的图片
+    [_Loading stopAnimating];          //加载符号结束
     // Do any additional setup after loading the view, typically from a nib.
 }
-- (IBAction)ShowUsersLocation:(id)sender {  //点击显示位置按钮触发的方法
-    self.LocationManager=[[CLLocationManager alloc]init];
-    self.LocationManager.delegate=(id)self;  //设置定位管理器的委托对象
+- (IBAction)ShowUsersLocation:(id)sender {          //点击显示位置按钮触发的方法
+    self.LocationManager=[[CLLocationManager alloc]init];       //初始化定位管理器
+    self.LocationManager.delegate=(id)self;         //设定定位管理器的委托对象
     [_LocationManager requestAlwaysAuthorization];  //申请定位权限
-    [_LocationManager startUpdatingLocation];
-    [_MainMap showsUserLocation];
+    [_LocationManager startUpdatingLocation];       //开始追踪位置
+    [_MainMap showsUserLocation];       //将用户位置显示在地图上
     _MainMap.userTrackingMode=MKUserTrackingModeFollow;  //持续跟踪用户位置
 }
 - (IBAction)BackToCAUC:(id)sender {
-    _MapCenterLocation=MKCoordinateRegionMake(_CAUCCoordinate, _MapScan);
+    _MapCenterLocation=MKCoordinateRegionMake(_CAUCCoordinate, _MapScan);       //重新定义地图视野
     [_MainMap setRegion:(_MapCenterLocation) animated:(YES)];  //设置地图视野
 }
 - (IBAction)UserTapMap:(id)sender {   //单击地图手势激活

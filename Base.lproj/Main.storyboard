@@ -325,7 +325,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fq0-9v-Xga" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2612" y="-609"/>
+            <point key="canvasLocation" x="521" y="615"/>
         </scene>
         <!--设置-->
         <scene sceneID="Dr8-Ef-qhs">
@@ -346,10 +346,10 @@
                                     <navigationItem title="设置" id="FiI-UC-CJX"/>
                                 </items>
                             </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8jP-HY-KJ3">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="46" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="8jP-HY-KJ3">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="cF3-fb-u1h" id="s5A-ec-es9"/>
                                     <outlet property="delegate" destination="cF3-fb-u1h" id="rQX-27-qSV"/>
@@ -359,6 +359,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="设置" image="settingsicon.png" selectedImage="settingsicon.png" id="bfg-oJ-jKA"/>
+                    <connections>
+                        <outlet property="settingsTable" destination="8jP-HY-KJ3" id="pah-PA-mYg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kb6-QB-gzv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
