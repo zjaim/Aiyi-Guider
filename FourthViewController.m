@@ -11,8 +11,9 @@
 
 @interface SettingsCell : NSObject
 
-@property (nonatomic,copy) NSString *cellTitle, *cellDetails;
-- (SettingsCell *)initWithTitle:(NSString *)title andDetails:(NSString *)details;
+@property (nonatomic,copy,nonnull) NSString *cellTitle;
+@property (nonatomic,copy) NSString *cellDetails;
+- (SettingsCell *)initWithTitle:(nonnull NSString *)title andDetails:(NSString *)details;
 - (NSString *)getCellTitle;
 - (NSString *)getCellDetails;
 
@@ -31,13 +32,13 @@
 
 @implementation SettingsCell
 
-- (SettingsCell *)initWithTitle:(NSString *)title andDetails:(NSString *)details {
+- (SettingsCell *)initWithTitle:(nonnull NSString *)title andDetails:(NSString *)details {
     self=[super init];
     _cellTitle=title;
     _cellDetails=details;
     return self;
 }
-- (NSString *)getCellTitle {
+- (nonnull NSString *)getCellTitle {
     return _cellTitle;
 }
 - (NSString *)getCellDetails {
@@ -72,6 +73,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *settingsTable;
 @property (nonatomic,strong) UITableViewCell *cell;
 @property (nonatomic,strong) NSMutableArray *settingsSection;
+@property (nonatomic,strong) NSUserDefaults *settingsValue;
+@property (nonatomic,weak) UISwitch *touchidSwitcher;
 
 @end
 
@@ -79,6 +82,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [_touchidSwitcher setOn:(false)];
     SettingsCell *touchIDSettingsCell=[[SettingsCell alloc]initWithTitle:(@"使用Touch ID登录") andDetails:(@"启用指纹登录功能")];
     SettingsCell *aboutSettingsCell=[[SettingsCell alloc]initWithTitle:(@"致谢") andDetails:(@"关于本程序")];
     NSMutableArray *section0Cells=[[NSMutableArray alloc]initWithObjects:(touchIDSettingsCell),(aboutSettingsCell), nil];
@@ -110,6 +114,7 @@
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     //点按TableViewCell单元格触发的方法
     [tableView deselectRowAtIndexPath:indexPath animated:YES];   //点击后反光高亮效果立即消失
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

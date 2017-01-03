@@ -325,7 +325,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fq0-9v-Xga" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="521" y="615"/>
+            <point key="canvasLocation" x="281" y="625"/>
         </scene>
         <!--设置-->
         <scene sceneID="Dr8-Ef-qhs">
@@ -397,6 +397,6 @@
         <image name="settingsicon.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="a32-re-Wo4"/>
+        <segue reference="iM1-Ih-qzc"/>
     </inferredMetricsTieBreakers>
 </document>
