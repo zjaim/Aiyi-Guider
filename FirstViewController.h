@@ -10,7 +10,7 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface FirstViewController : UIViewController <UISearchBarDelegate,CLLocationManagerDelegate,MKMapViewDelegate,MKAnnotation>
+@interface FirstViewController : UIViewController <UISearchBarDelegate,CLLocationManagerDelegate,MKMapViewDelegate>
   //遵循搜索框控件，定位管理器，地图视图，大头针对象协议
 
 @end
